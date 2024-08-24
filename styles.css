@@ -1,1 +1,101 @@
+html, body {
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    font-family: sans-serif;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    outline: 4px solid rgb(19, 18, 18);
+    background-color: gray;
+    width: 500px;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.display {
+    align-self: center;
+    outline: 2px solid rgb(19, 18, 18);
+    background-color: rgb(56, 155, 56);
+    text-align: right;
+    font-size: 40px;
+    width: 90%;
+    border-radius: 1px;
+    padding: 3px 6px;
+    margin-top: 10px;
+}
+
+.clear {
+    font-size: 16px;
+    background-color: brown;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 10px 13px 10px;
+    border-radius: 4px;
+    padding: 3px;
+    width: 15%;
+}
+
+.buttons {
+    display: flex;
+    width: 90%;
+    align-self: center;
+}
+
+.digits, .symbols {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+button {
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+    font-size: 30px;
+    outline: 1px solid black;
+}
+
+.digits > button {
+    background-color: rgb(20, 22, 53);   
+    width: 25%;
+    aspect-ratio: 1/1;
+    margin: 5px;
+}
+
+.symbols > button {
+    background-color: rgb(175, 100, 38); 
+    aspect-ratio: 1/1;
+    width: 30%;
+    margin: 10px;
+}
+
+.symbols > .equal {
+    background-color: rgb(35, 117, 48);
+}
+
+.symbols > .multiply {
+    font-size: 20px;
+}
+
+.symbols_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 
