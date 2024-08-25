@@ -1,22 +1,20 @@
-let firstNumber;
-let operator;
-let operatorPicked;
-let secondNumber;
-let secondNumberPicked;
-let cleaned;
+let firstNumber = 0;
+let operator = "";
+let secondNumber = null;
+let cleaned = false;
 
-function initialState() {
+const display = document.querySelector(".display");
+
+function reset() {
 display.textContent = "0";
 firstNumber = 0;
 operator = "";
-operatorPicked = false;
 secondNumber = null;
-secondNumberPicked = false;
 cleaned = false;
 }
 
 const clearButton = document.querySelector(".clear");
-const clear = clearButton.addEventListener("click", initialState);
+const clear = clearButton.addEventListener("click", reset);
 
 function add(a,b) {
     return a + b;
@@ -39,32 +37,31 @@ function divide(a,b) {
 }
 
 function operate() {
-    let result;
-    if (operator == "+") {
-        result = (add(firstNumber,secondNumber));
-    } else if (operator == "-") {
-        result = (subtract(firstNumber,secondNumber));
-    } else if (operator == "∗") {
-        result = (multiply(firstNumber,secondNumber));
-    } else if (operator == "÷") {
-        result = (divide(firstNumber,secondNumber));
+    switch (operator) {
+        case "+":
+            return add(firstNumber, secondNumber);
+        case "-":
+            return subtract(firstNumber, secondNumber);
+        case "∗":
+            return multiply(firstNumber, secondNumber);
+        case "÷":
+            return divide(firstNumber, secondNumber);
+        default:
+            return null;
     }
-    return result;
 }
-
-const display = document.querySelector(".display");
 
 function numberDisplay() {
     const digitButtons = document.querySelectorAll(".digits button");
     digitButtons.forEach(button => {
         button.addEventListener("click", () => {
-        if (display.textContent == "0" || afterResult) {
+        if (display.textContent === "0" || afterResult) {
             display.textContent = "";
-            afterResult = false;
-        } else if (operator != "" && !cleaned) {
+        } else if (operator !== "" && !cleaned) {
             display.textContent = "";
             cleaned = true;
         }
+        afterResult = false;
         display.textContent += button.textContent;
         getNumbers();
     });
@@ -72,20 +69,19 @@ function numberDisplay() {
 }
 
 function getNumbers() {
-    if (operator == "") {
+    if (operator === "") {
         firstNumber = Number(display.textContent);
     } else {
         secondNumber = Number(display.textContent);
-        secondNumberPicked = true;
     }
 }
 
 function result() {
-    if (secondNumberPicked == true) {
+    if (secondNumber !== null) {
         afterResult = true;
         firstNumber = operate();
         display.textContent = firstNumber;
-        secondNumberPicked = false;
+        secondNumber = null;
         cleaned = false;
         operator = "";
     };
@@ -100,16 +96,18 @@ function pickOperator() {
         button.addEventListener("click", () => {
             if ((button.textContent != ",") && 
             (button.textContent != "=") && 
-            (secondNumberPicked == false)) {
+            (secondNumber === null)) {
                 operator = button.textContent;
                 operatorPicked = true;
+                afterResult = false;
             }
-            if ((secondNumberPicked == true) && 
+            if ((secondNumber !== null) && 
             (operatorPicked == true) && 
             (button.textContent != ",") && 
             (button.textContent != "=")) {
                 result();
                 operator = button.textContent;
+                afterResult = false;
             }
     });
 });
@@ -131,7 +129,6 @@ function backspace() {
     });
 }
 
-initialState();
 numberDisplay();
 pickOperator();
 backspace();
