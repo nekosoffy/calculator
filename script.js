@@ -56,19 +56,22 @@ function pickOperator() {
     const operatorButtons = document.querySelectorAll(".symbols button");
     operatorButtons.forEach(button => {
         button.addEventListener("click", () => {
-            if ((button.textContent != ",") && (button.textContent != "=")) {
+            if ((button.textContent != ",") && 
+            (button.textContent != "=") && 
+            (secondNumberPicked == false)) {
                 operator = button.textContent;
                 operatorPicked = true;
-
-                if ((secondNumberPicked == true) && (operatorPicked == true)) {
-                    firstNumber = operate();
-                    display.textContent = firstNumber;
-                    secondNumberPicked = false;
-                    operator = button.textContent;
-                    cleaned = false;
-                }
             }
-        console.log(operator);
+            if ((secondNumberPicked == true) && 
+            (operatorPicked == true) && 
+            (button.textContent != ",") && 
+            (button.textContent != "=")) {
+                firstNumber = operate();
+                display.textContent = firstNumber;
+                secondNumberPicked = false;
+                operator = button.textContent;
+                cleaned = false;
+            }
     });
 });
 }
