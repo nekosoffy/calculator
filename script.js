@@ -85,5 +85,18 @@ function getNumbers() {
     }
 }
 
+function result() {
+    const result = document.querySelector(".equal");
+    result.addEventListener("click", () => {
+        if (secondNumberPicked == true) {
+            firstNumber = operate();
+            display.textContent = firstNumber;
+            secondNumberPicked = false;
+            cleaned = false;
+        }
+    });
+}
+
 numberDisplay();
 pickOperator();
+result();
