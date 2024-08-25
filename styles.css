@@ -1,11 +1,11 @@
 html, body {
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: #ADBBDA;
     font-size: 20px;
     font-family: sans-serif;
-    width: 100%;
-    height: 100%;
+    height: 100vh;
     margin: 0;
 }
 
@@ -17,7 +17,7 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-self: center;
+    align-items: center;
     outline: 4px solid rgb(19, 18, 18);
     background-color: #244855;
     width: 500px;
@@ -27,7 +27,6 @@ html, body {
 }
 
 .display {
-    align-self: center;
     outline: 2px solid rgb(19, 18, 18);
     background-color: #86C932;
     text-align: right;
@@ -38,6 +37,12 @@ html, body {
     margin-top: 10px;
 }
 
+.clr_wrapper {
+    display: flex;
+    width: 80%;
+    justify-content: space-evenly;
+}
+
 .clear {
     font-size: 16px;
     background-color: brown;
@@ -46,14 +51,16 @@ html, body {
     font-weight: bold;
     border-radius: 4px;
     padding: 3px;
-    width: 60%;
+    width: 50%;
     margin-top: 12px;
 }
 
 .backspace {
+    width: 20%;
     background-color: brown;
-    font-size: 15px;
-    margin-right: 10px;
+    aspect-ratio: 1/1;
+    margin-top: 12px;
+    font-size: 16px;
 }
 
 .buttons {
@@ -78,21 +85,21 @@ button {
     outline: 1px solid black;
 }
 
-.digits > button {
+.digits > * {
     background-color: #376E6F;   
     width: 25%;
     aspect-ratio: 1/1;
     margin: 5px;
 }
 
-.symbols_container {
+.wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
 
-.symbols > button {
+.symbols > * {
     background-color: #464866; 
     aspect-ratio: 1/1;
     width: 30%;
