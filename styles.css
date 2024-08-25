@@ -46,8 +46,14 @@ html, body {
     font-weight: bold;
     border-radius: 4px;
     padding: 3px;
-    width: 50%;
+    width: 60%;
     margin-top: 12px;
+}
+
+.backspace {
+    background-color: brown;
+    font-size: 15px;
+    margin-right: 10px;
 }
 
 .buttons {
@@ -79,6 +85,13 @@ button {
     margin: 5px;
 }
 
+.symbols_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .symbols > button {
     background-color: #464866; 
     aspect-ratio: 1/1;
@@ -94,11 +107,6 @@ button {
     font-size: 20px;
 }
 
-.symbols_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
+
 
 
