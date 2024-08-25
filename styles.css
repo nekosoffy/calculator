@@ -1,6 +1,7 @@
 html, body {
     display: flex;
     justify-content: center;
+    background-color: #ADBBDA;
     font-size: 20px;
     font-family: sans-serif;
     width: 100%;
@@ -18,7 +19,7 @@ html, body {
     justify-content: center;
     align-self: center;
     outline: 4px solid rgb(19, 18, 18);
-    background-color: gray;
+    background-color: #244855;
     width: 500px;
     border-radius: 4px;
     padding: 10px;
@@ -28,7 +29,7 @@ html, body {
 .display {
     align-self: center;
     outline: 2px solid rgb(19, 18, 18);
-    background-color: rgb(56, 155, 56);
+    background-color: #86C932;
     text-align: right;
     font-size: 40px;
     width: 90%;
@@ -43,16 +44,17 @@ html, body {
     color: white;
     text-align: center;
     font-weight: bold;
-    margin: 20px 10px 13px 10px;
     border-radius: 4px;
     padding: 3px;
-    width: 15%;
+    width: 50%;
+    margin-top: 12px;
 }
 
 .buttons {
     display: flex;
     width: 90%;
     align-self: center;
+    margin-top: 20px;
 }
 
 .digits, .symbols {
@@ -71,21 +73,21 @@ button {
 }
 
 .digits > button {
-    background-color: rgb(20, 22, 53);   
+    background-color: #376E6F;   
     width: 25%;
     aspect-ratio: 1/1;
     margin: 5px;
 }
 
 .symbols > button {
-    background-color: rgb(175, 100, 38); 
+    background-color: #464866; 
     aspect-ratio: 1/1;
     width: 30%;
     margin: 10px;
 }
 
 .symbols > .equal {
-    background-color: rgb(35, 117, 48);
+    background-color: #61892F;
 }
 
 .symbols > .multiply {
@@ -95,7 +97,8 @@ button {
 .symbols_container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
 }
 
 
