@@ -31,6 +31,10 @@ function multiply(a,b) {
 }
 
 function divide(a,b) {
+    if (b === 0) {
+        alert("Cannot divide by zero!");
+        return 0;
+    }
     return a / b;
 }
 
@@ -78,11 +82,11 @@ function getNumbers() {
 
 function result() {
     if (secondNumberPicked == true) {
+        afterResult = true;
         firstNumber = operate();
         display.textContent = firstNumber;
         secondNumberPicked = false;
         cleaned = false;
-        afterResult = true;
         operator = "";
     };
 }
