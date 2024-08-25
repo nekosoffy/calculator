@@ -1,3 +1,23 @@
+let firstNumber;
+let operator;
+let operatorPicked;
+let secondNumber;
+let secondNumberPicked;
+let cleaned;
+
+function initialState() {
+display.textContent = "0";
+firstNumber = 0;
+operator = "";
+operatorPicked = false;
+secondNumber = null;
+secondNumberPicked = false;
+cleaned = false;
+}
+
+const clearButton = document.querySelector(".clear");
+const clear = clearButton.addEventListener("click", initialState);
+
 function add(a,b) {
     return a + b;
 }
@@ -14,14 +34,6 @@ function divide(a,b) {
     return a / b;
 }
 
-let firstNumber = 0;
-let operator = "";
-let operatorPicked = false;
-let secondNumber;
-let secondNumberPicked = false;
-let cleaned = false;
-const display = document.querySelector(".display");
-
 function operate() {
     let result;
     if (operator == "+") {
@@ -36,13 +48,16 @@ function operate() {
     return result;
 }
 
+const display = document.querySelector(".display");
+
 function numberDisplay() {
     const digitButtons = document.querySelectorAll(".digits button");
     digitButtons.forEach(button => {
         button.addEventListener("click", () => {
-        if (display.textContent == "0") {
+        if (display.textContent == "0" || afterResult) {
             display.textContent = "";
-        } else if (operator != "" && cleaned == false) {
+            afterResult = false;
+        } else if (operator != "" && !cleaned) {
             display.textContent = "";
             cleaned = true;
         }
@@ -51,6 +66,29 @@ function numberDisplay() {
     });
 });
 }
+
+function getNumbers() {
+    if (operator == "") {
+        firstNumber = Number(display.textContent);
+    } else {
+        secondNumber = Number(display.textContent);
+        secondNumberPicked = true;
+    }
+}
+
+function result() {
+    if (secondNumberPicked == true) {
+        firstNumber = operate();
+        display.textContent = firstNumber;
+        secondNumberPicked = false;
+        cleaned = false;
+        afterResult = true;
+        operator = "";
+    };
+}
+
+const equalButton = document.querySelector(".equal");
+const showResult = equalButton.addEventListener("click", result);
 
 function pickOperator() {
     const operatorButtons = document.querySelectorAll(".symbols button");
@@ -66,36 +104,11 @@ function pickOperator() {
             (operatorPicked == true) && 
             (button.textContent != ",") && 
             (button.textContent != "=")) {
-                firstNumber = operate();
-                display.textContent = firstNumber;
-                secondNumberPicked = false;
+                result();
                 operator = button.textContent;
-                cleaned = false;
             }
     });
 });
-}
-
-function getNumbers() {
-    if (operator == "") {
-        firstNumber = Number(display.textContent);
-    } else {
-        secondNumber = Number(display.textContent);
-        secondNumberPicked = true;
-    }
-}
-
-function result() {
-    const result = document.querySelector(".equal");
-    result.addEventListener("click", () => {
-        if (secondNumberPicked == true) {
-            firstNumber = operate();
-            display.textContent = firstNumber;
-            secondNumberPicked = false;
-            cleaned = false;
-            operator = "";
-        }
-    });
 }
 
 function backspace() {
@@ -114,7 +127,7 @@ function backspace() {
     });
 }
 
+initialState();
 numberDisplay();
 pickOperator();
-result();
 backspace();
