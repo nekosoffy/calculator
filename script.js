@@ -93,10 +93,28 @@ function result() {
             display.textContent = firstNumber;
             secondNumberPicked = false;
             cleaned = false;
+            operator = "";
         }
+    });
+}
+
+function backspace() {
+    const backspace = document.querySelector(".backspace");
+    backspace.addEventListener("click", () => {
+        if (display.textContent != "0") {
+            if ((display.textContent).length == 1) {
+                display.textContent = "0";
+            } else {
+                let erasedDisplay;
+                erasedDisplay = (display.textContent).slice(0,-1);
+                display.textContent = erasedDisplay;
+            }
+        }
+        getNumbers();
     });
 }
 
 numberDisplay();
 pickOperator();
 result();
+backspace();
