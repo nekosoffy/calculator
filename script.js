@@ -1,88 +1,47 @@
-let firstNumber = 0;
-let operator = "";
-let operatorPicked = false;
-let secondNumber = null;
-let cleaned = false;
-let afterResult = false;
-let afterPoint = false;
+let firstNumber = 0;           // Stores the first number in the calculation
+let operator = null;           // Stores the current operator (+, -, *, /)
+let operatorPicked = false;    // Indicates if an operator has been selected
+let secondNumber = null;       // Stores the second number in the calculation
+let cleaned = false;           // Indicates if the display was cleared for a new number
+let afterPoint = false;        // Indicates if a decimal point has been added
+let afterResult = false;       // Indicates if the result of a calculation is displayed 
 
 const display = document.querySelector(".display");
+const backspace = document.querySelector(".backspace");
 const clear = document.querySelector(".clear");
+const numbers = document.querySelectorAll(".num_wrapper button");
+const operators = document.querySelectorAll(".symbol");
+const separator = document.querySelector(".point");
+const equality = document.querySelector(".equal");
 
-clear.addEventListener("click", () => {
-    display.textContent = "0";
+const updateDisplay = (value) => {
+    display.textContent = value;
+};
+
+const eraseLastChar = () => {
+    updateDisplay(display.textContent.slice(0, -1));
+};
+
+function resetState() {
+    updateDisplay("0");
     firstNumber = 0;
-    operator = "";
+    operator = null;
     operatorPicked = false;
     secondNumber = null;
     cleaned = false;
-    afterResult = false;
     afterPoint = false;
-});
-
-function add(a,b) {
-    return a + b;
+    afterResult = false;
 }
 
-function subtract(a,b) {
-    return a - b;
-}
-
-function multiply(a,b) {
-    return a * b;
-}
-
-function divide(a,b) {
-    if (b === 0) {
-        alert("Cannot divide by zero!");
-        return 0;
-    }
-    return a / b;
-}
+const operations = {
+    "+": (a, b) => a + b,
+    "-": (a, b) => a - b,
+    "∗": (a, b) => a * b,
+    "÷": (a, b) => b === 0 ? (alert("Cannot divide by zero!"), 0) : a / b
+};
 
 function operate() {
-    switch (operator) {
-        case "+":
-            return add(firstNumber, secondNumber);
-        case "-":
-            return subtract(firstNumber, secondNumber);
-        case "∗":
-            return multiply(firstNumber, secondNumber);
-        case "÷":
-            return divide(firstNumber, secondNumber);
-        default:
-            return null;
-    }
-}
-
-function numberDisplay() {
-    const digitButtons = document.querySelectorAll(".num_wrapper button");
-    digitButtons.forEach(button => {
-        button.addEventListener("click", () => {
-        if ((display.textContent === "0" || afterResult)) {
-            display.textContent = "";
-        } else if (operator !== "" && 
-            !cleaned && 
-            secondNumber === null) {
-            display.textContent = "";
-            cleaned = true;
-        }
-        afterResult = false;
-        afterPoint = false;
-        if ((display.textContent).length < 16) {
-        display.textContent += button.textContent;
-        }
-        getNumbers();
-    });
-});
-}
-
-function getNumbers() {
-    if (operator === "") {
-        firstNumber = Number(display.textContent);
-    } else {
-        secondNumber = Number(display.textContent);
-    }
+    return operator in operations ? operations[operator](firstNumber, secondNumber) : null;
 }
 
 function result() {
@@ -92,78 +51,89 @@ function result() {
         display.textContent = firstNumber;
         secondNumber = null;
         cleaned = false;
-        operator = "";
+        operator = null;
     };
 }
 
-const equalTo = document.querySelector(".equal");
-equalTo.addEventListener("click", result);
-
-function pickOperator() {
-    const operatorButtons = document.querySelectorAll(".symbol");
-    operatorButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            if ((afterPoint) && (display.textContent.at(-1) === ".")) {
-                eraseChar();
-            }
-            if (secondNumber === null) {
-                operator = button.textContent;
-                operatorPicked = true;
-                afterResult = false;
-            }
-            if ((secondNumber !== null) && (operatorPicked)) {
-                result();
-                operator = button.textContent;
-                afterResult = false;
-            }
-    });
-});
+function handleOperatorClick(event) {
+    const button = event.target;
+    if ((afterPoint) && (display.textContent.at(-1) === ".")) { // Removes the decimal point after pressing an operator, if it exists.
+        eraseLastChar();
+    }
+    if (secondNumber === null) {
+        operator = button.textContent;
+        operatorPicked = true;
+        afterResult = false;
+    }
+    if ((secondNumber !== null) && (operatorPicked)) { // If you press an operator before the equal sign, but after picking the second number, 
+        result();                                      // this controls that the result will be shown. It also uses the result of the previous 
+        operator = button.textContent;                 // operation as the first number of a new operation, along with the operator pressed.
+        afterResult = false;
+    }
 }
 
-function eraseChar() {
-    display.textContent = (display.textContent).slice(0,-1);
+function updateNumbers() {                           
+    if (operator === null) {
+        firstNumber = Number(display.textContent);
+    } else {
+        secondNumber = Number(display.textContent);
+    }
 }
 
-function backspace() {
-    const backspace = document.querySelector(".backspace");
-    backspace.addEventListener("click", () => {
-        if (display.textContent != "0") {
-            if ((display.textContent).length == 1) {
-                display.textContent = "0";
-            } else if (afterResult) {
-                display.textContent = "0";
-                afterResult = false;                
-            } else {
-                eraseChar();
-            }
+function handleNumberClick(event) {
+    const button = event.target;
+    if (display.textContent === "0" || afterResult) {
+        updateDisplay("");
+    } else if (operator !== null && !cleaned && secondNumber === null) { // This clears the display before showing the second number of the operation.
+        updateDisplay("");
+        cleaned = true;
+    }
+    afterResult = false;
+    afterPoint = false;
+    if ((display.textContent).length < 16) {
+        updateDisplay(display.textContent + button.textContent);
+    }
+    updateNumbers();
+}
+
+function handleBackspaceClick() {
+    if (display.textContent != "0") {
+        if ((display.textContent).length == 1) {
+            updateDisplay("0");
+        } else if (afterResult) {
+            updateDisplay("0");
+            afterResult = false;                
+        } else {
+            eraseLastChar();
         }
-        getNumbers();
-    });
+    }
+    updateNumbers();
 }
 
-function addSeparator() {
+function handleSeparatorClick() {
     if ((!display.textContent.includes(".")) && (!afterPoint)) {
-        if (display.textContent === "0" || afterResult) {
-            display.textContent = "0.";
-        } else if ((operatorPicked) && (secondNumber === null)) {
-            display.textContent = "0.";
+        if (display.textContent === "0" || afterResult) { // Correct display when pressing . after zero or right after the result of an operation.
+            updateDisplay("0.");
+        } else if ((operatorPicked) && (secondNumber === null)) { // Correct display for pressing "." right after an operator.
+            updateDisplay("0.");
             cleaned = true;
         } else {
-            display.textContent += ".";
+            updateDisplay(display.textContent + ".");
         }
         afterPoint = true;
         afterResult = false;
-    } else if ((display.textContent === "0") || (afterResult)) {
-        display.textContent = "0.";
+    } else if ((display.textContent === "0") || (afterResult)) { // Included for the case where the result already has a "."
+        updateDisplay("0.");
         afterPoint = true;
         afterResult = false;
     }
-    getNumbers();
+    updateNumbers();
 }
 
-const separator = document.querySelector(".point");
-separator.addEventListener("click", addSeparator);
+backspace.addEventListener("click", handleBackspaceClick);
+clear.addEventListener("click", resetState);
+separator.addEventListener("click", handleSeparatorClick);
+equality.addEventListener("click", result);
 
-numberDisplay();
-pickOperator();
-backspace();
+numbers.forEach(button => button.addEventListener("click", handleNumberClick));
+operators.forEach(button => button.addEventListener("click", handleOperatorClick));
