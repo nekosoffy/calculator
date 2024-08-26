@@ -60,7 +60,7 @@ function showOperator() {
     const existingSpan = display.querySelector("span");
    
     addOperator.textContent = ` ${operator}`;
-    addOperator.style.color = "blue";
+    addOperator.style.color = "#023D54";
     
     if (existingSpan) {
         display.replaceChild(addOperator, existingSpan);
