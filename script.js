@@ -48,7 +48,7 @@ function result() {
     if (secondNumber !== null) {
         afterResult = true;
         firstNumber = operate();
-        display.textContent = firstNumber;
+        updateDisplay(String(firstNumber));
         secondNumber = null;
         cleaned = false;
         operator = null;
