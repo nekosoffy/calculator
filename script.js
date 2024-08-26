@@ -62,7 +62,7 @@ function numberDisplay() {
             cleaned = true;
         }
         afterResult = false;
-        if ((display.textContent).length < 14) {
+        if ((display.textContent).length < 16) {
         display.textContent += button.textContent;
         getNumbers();
         }
@@ -121,6 +121,9 @@ function backspace() {
         if (display.textContent != "0") {
             if ((display.textContent).length == 1) {
                 display.textContent = "0";
+            } else if (afterResult) {
+                display.textContent = "0";
+                afterResult = false;                
             } else {
                 let erasedDisplay;
                 erasedDisplay = (display.textContent).slice(0,-1);
