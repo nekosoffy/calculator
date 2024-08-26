@@ -59,9 +59,11 @@ function numberDisplay() {
     const digitButtons = document.querySelectorAll(".num_wrapper button");
     digitButtons.forEach(button => {
         button.addEventListener("click", () => {
-        if (display.textContent === "0" || afterResult) {
+        if ((display.textContent === "0" || afterResult)) {
             display.textContent = "";
-        } else if (operator !== "" && !cleaned) {
+        } else if (operator !== "" && 
+            !cleaned && 
+            secondNumber === null) {
             display.textContent = "";
             cleaned = true;
         }
@@ -69,8 +71,8 @@ function numberDisplay() {
         afterPoint = false;
         if ((display.textContent).length < 16) {
         display.textContent += button.textContent;
-        getNumbers();
         }
+        getNumbers();
     });
 });
 }
