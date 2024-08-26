@@ -62,8 +62,10 @@ function numberDisplay() {
             cleaned = true;
         }
         afterResult = false;
+        if ((display.textContent).length < 14) {
         display.textContent += button.textContent;
         getNumbers();
+        }
     });
 });
 }
