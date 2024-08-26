@@ -1,5 +1,5 @@
 let firstNumber = 0;           // Stores the first number in the calculation
-let operator = null;           // Stores the current operator (+, -, *, /)
+let operator = null;           // Stores the current operator
 let operatorPicked = false;    // Indicates if an operator has been selected
 let secondNumber = null;       // Stores the second number in the calculation
 let cleaned = false;           // Indicates if the display was cleared for a new number
@@ -130,6 +130,30 @@ function handleSeparatorClick() {
     updateNumbers();
 }
 
+function handleKeyPress(event) {
+    const key = event.key;
+
+    if (key >= '0' && key <= '9') {
+        handleNumberClick({ target: { textContent: key } });
+    } else if (key === '+') {
+        handleOperatorClick({ target: { textContent: '+' } });
+    } else if (key === '-') { 
+        handleOperatorClick({ target: { textContent: '-' } });
+    } else if (key === '*') {
+        handleOperatorClick({ target: { textContent: '∗' } });
+    } else if (key === '/') {
+        handleOperatorClick({ target: { textContent: '÷' } });
+    } else if (key === 'Enter' || key === '=') {
+        result();
+    } else if (key === 'Backspace') {
+        handleBackspaceClick();
+    } else if (key === '.') {
+        handleSeparatorClick();
+    } else if (key === 'Escape') {
+        resetState();
+    }
+}
+
 backspace.addEventListener("click", handleBackspaceClick);
 clear.addEventListener("click", resetState);
 separator.addEventListener("click", handleSeparatorClick);
@@ -137,3 +161,5 @@ equality.addEventListener("click", result);
 
 numbers.forEach(button => button.addEventListener("click", handleNumberClick));
 operators.forEach(button => button.addEventListener("click", handleOperatorClick));
+
+window.addEventListener("keydown", handleKeyPress);
