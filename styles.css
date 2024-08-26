@@ -69,7 +69,7 @@ html, body {
     margin-top: 20px;
 }
 
-.digits, .symbols {
+.num_wrapper, .sym_wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -84,7 +84,7 @@ button {
     outline: 1px solid black;
 }
 
-.digits > * {
+.num_wrapper > * {
     background-color: #376E6F;   
     width: 25%;
     aspect-ratio: 1/1;
@@ -98,7 +98,7 @@ button {
     align-items: center;
 }
 
-.symbols > * {
+.sym_wrapper > * {
     background-color: #464866; 
     aspect-ratio: 1/1;
     width: 30%;

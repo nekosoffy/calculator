@@ -1,20 +1,24 @@
 let firstNumber = 0;
 let operator = "";
+let operatorPicked = false;
 let secondNumber = null;
 let cleaned = false;
+let afterResult = false;
+let afterPoint = false;
 
 const display = document.querySelector(".display");
+const clear = document.querySelector(".clear");
 
-function reset() {
-display.textContent = "0";
-firstNumber = 0;
-operator = "";
-secondNumber = null;
-cleaned = false;
-}
-
-const clearButton = document.querySelector(".clear");
-const clear = clearButton.addEventListener("click", reset);
+clear.addEventListener("click", () => {
+    display.textContent = "0";
+    firstNumber = 0;
+    operator = "";
+    operatorPicked = false;
+    secondNumber = null;
+    cleaned = false;
+    afterResult = false;
+    afterPoint = false;
+});
 
 function add(a,b) {
     return a + b;
@@ -52,7 +56,7 @@ function operate() {
 }
 
 function numberDisplay() {
-    const digitButtons = document.querySelectorAll(".digits button");
+    const digitButtons = document.querySelectorAll(".num_wrapper button");
     digitButtons.forEach(button => {
         button.addEventListener("click", () => {
         if (display.textContent === "0" || afterResult) {
@@ -62,6 +66,7 @@ function numberDisplay() {
             cleaned = true;
         }
         afterResult = false;
+        afterPoint = false;
         if ((display.textContent).length < 16) {
         display.textContent += button.textContent;
         getNumbers();
@@ -89,30 +94,32 @@ function result() {
     };
 }
 
-const equalButton = document.querySelector(".equal");
-const showResult = equalButton.addEventListener("click", result);
+const equalTo = document.querySelector(".equal");
+equalTo.addEventListener("click", result);
 
 function pickOperator() {
-    const operatorButtons = document.querySelectorAll(".symbols button");
+    const operatorButtons = document.querySelectorAll(".symbol");
     operatorButtons.forEach(button => {
         button.addEventListener("click", () => {
-            if ((button.textContent != ",") && 
-            (button.textContent != "=") && 
-            (secondNumber === null)) {
+            if ((afterPoint) && (display.textContent.at(-1) === ".")) {
+                eraseChar();
+            }
+            if (secondNumber === null) {
                 operator = button.textContent;
                 operatorPicked = true;
                 afterResult = false;
             }
-            if ((secondNumber !== null) && 
-            (operatorPicked == true) && 
-            (button.textContent != ",") && 
-            (button.textContent != "=")) {
+            if ((secondNumber !== null) && (operatorPicked)) {
                 result();
                 operator = button.textContent;
                 afterResult = false;
             }
     });
 });
+}
+
+function eraseChar() {
+    display.textContent = (display.textContent).slice(0,-1);
 }
 
 function backspace() {
@@ -125,14 +132,35 @@ function backspace() {
                 display.textContent = "0";
                 afterResult = false;                
             } else {
-                let erasedDisplay;
-                erasedDisplay = (display.textContent).slice(0,-1);
-                display.textContent = erasedDisplay;
+                eraseChar();
             }
         }
         getNumbers();
     });
 }
+
+function addSeparator() {
+    if ((!display.textContent.includes(".")) && (!afterPoint)) {
+        if (display.textContent === "0" || afterResult) {
+            display.textContent = "0.";
+        } else if ((operatorPicked) && (secondNumber === null)) {
+            display.textContent = "0.";
+            cleaned = true;
+        } else {
+            display.textContent += ".";
+        }
+        afterPoint = true;
+        afterResult = false;
+    } else if ((display.textContent === "0") || (afterResult)) {
+        display.textContent = "0.";
+        afterPoint = true;
+        afterResult = false;
+    }
+    getNumbers();
+}
+
+const separator = document.querySelector(".point");
+separator.addEventListener("click", addSeparator);
 
 numberDisplay();
 pickOperator();
