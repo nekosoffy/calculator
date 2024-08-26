@@ -18,6 +18,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     outline: 4px solid rgb(19, 18, 18);
     background-color: #244855;
     width: 500px;
@@ -107,8 +108,4 @@ button {
 
 .equal {
     background-color: #61892F;
-}
-
-.multiply {
-    font-size: 20px;
 }

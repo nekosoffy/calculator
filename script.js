@@ -35,8 +35,8 @@ function resetState() {
 
 const operations = {
     "+": (a, b) => a + b,
-    "-": (a, b) => a - b,
-    "∗": (a, b) => a * b,
+    "−": (a, b) => a - b,
+    "×": (a, b) => a * b,
     "÷": (a, b) => b === 0 ? (alert("Cannot divide by zero!"), 0) : a / b
 };
 
@@ -56,14 +56,18 @@ function result() {
 }
 
 function showOperator() {
-    const symbols = ["+", "-", "∗", "÷"];
-    if (display.querySelector("span") === null) {
-        const addOperator = document.createElement("span");
-        addOperator.textContent = ` ${operator}`;
-        addOperator.style.color = "blue";
+    const addOperator = document.createElement("span");
+    const existingSpan = display.querySelector("span");
+   
+    addOperator.textContent = ` ${operator}`;
+    addOperator.style.color = "blue";
+    
+    if (existingSpan) {
+        display.replaceChild(addOperator, existingSpan);
+    } else {
         display.appendChild(addOperator);
     }
-} 
+}
 
 function handleOperatorClick(event) {
     const button = event.target;
@@ -150,9 +154,9 @@ function handleKeyPress(event) {
     } else if (key === '+') {
         handleOperatorClick({ target: { textContent: '+' } });
     } else if (key === '-') { 
-        handleOperatorClick({ target: { textContent: '-' } });
+        handleOperatorClick({ target: { textContent: '−' } });
     } else if (key === '*') {
-        handleOperatorClick({ target: { textContent: '∗' } });
+        handleOperatorClick({ target: { textContent: '×' } });
     } else if (key === '/') {
         handleOperatorClick({ target: { textContent: '÷' } });
     } else if (key === 'Enter' || key === '=') {
