@@ -55,6 +55,16 @@ function result() {
     };
 }
 
+function showOperator() {
+    const symbols = ["+", "-", "∗", "÷"];
+    if (display.querySelector("span") === null) {
+        const addOperator = document.createElement("span");
+        addOperator.textContent = ` ${operator}`;
+        addOperator.style.color = "blue";
+        display.appendChild(addOperator);
+    }
+} 
+
 function handleOperatorClick(event) {
     const button = event.target;
     if ((afterPoint) && (display.textContent.at(-1) === ".")) { // Removes the decimal point after pressing an operator, if it exists.
@@ -62,12 +72,14 @@ function handleOperatorClick(event) {
     }
     if (secondNumber === null) {
         operator = button.textContent;
+        showOperator();
         operatorPicked = true;
         afterResult = false;
     }
     if ((secondNumber !== null) && (operatorPicked)) { // If you press an operator before the equal sign, but after picking the second number, 
         result();                                      // this controls that the result will be shown. It also uses the result of the previous 
         operator = button.textContent;                 // operation as the first number of a new operation, along with the operator pressed.
+        showOperator();
         afterResult = false;
     }
 }
