@@ -117,7 +117,12 @@ function handleNumberClick(event) {
 }
 
 function handleBackspaceClick() {
-    if (display.textContent != "0") {
+    const existingSpan = display.querySelector("span");
+    if (existingSpan) {
+        existingSpan.remove();
+        operatorPicked = false;
+        operator = null;
+    } else if (display.textContent != "0") {
         if ((display.textContent).length == 1) {
             updateDisplay("0");
         } else if (afterResult) {
