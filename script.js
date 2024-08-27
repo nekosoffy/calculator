@@ -108,12 +108,12 @@ function handleNumberClick(event) {
         updateDisplay("");
         cleaned = true;
     }
-    afterResult = false;
-    afterPoint = false;
     if ((display.textContent).length < 16) {
         updateDisplay(display.textContent + button.textContent);
     }
     updateNumbers();
+    afterResult = false;
+    afterPoint = false;
 }
 
 function handleBackspaceClick() {
@@ -142,10 +142,11 @@ function handleSeparatorClick() {
         }
         afterPoint = true;
         afterResult = false;
-    } else if ((display.textContent === "0") || (afterResult)) { // Included for the case where the result already has a "."
-        updateDisplay("0.");
-        afterPoint = true;
+    } else if ((display.textContent === "0") || (afterResult) || (operatorPicked)) { // Included for the case where the result already has a "."
+        updateDisplay("0.");                                                         // Also accounts for pressing "." after an operator when the first number has
+        afterPoint = true;                                                           // a decimal separator.
         afterResult = false;
+        cleaned = true;
     }
     updateNumbers();
 }
