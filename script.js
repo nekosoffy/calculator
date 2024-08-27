@@ -58,7 +58,7 @@ function result() {
 function showOperator() {
     const addOperator = document.createElement("span");
     const existingSpan = display.querySelector("span");
-   
+
     addOperator.textContent = ` ${operator}`;
     addOperator.style.color = "#023D54";
     
@@ -73,18 +73,22 @@ function handleOperatorClick(event) {
     const button = event.target;
     if ((afterPoint) && (display.textContent.at(-1) === ".")) { // Removes the decimal point after pressing an operator, if it exists.
         eraseLastChar();
+        afterPoint = false;
+        cleaned = false;
     }
     if (secondNumber === null) {
         operator = button.textContent;
         showOperator();
         operatorPicked = true;
         afterResult = false;
+        cleaned = false;
     }
     if ((secondNumber !== null) && (operatorPicked)) { // If you press an operator before the equal sign, but after picking the second number, 
         result();                                      // this controls that the result will be shown. It also uses the result of the previous 
         operator = button.textContent;                 // operation as the first number of a new operation, along with the operator pressed.
         showOperator();
         afterResult = false;
+        cleaned = false;
     }
 }
 
@@ -130,10 +134,10 @@ function handleSeparatorClick() {
     if ((!display.textContent.includes(".")) && (!afterPoint)) {
         if (display.textContent === "0" || afterResult) { // Correct display when pressing . after zero or right after the result of an operation.
             updateDisplay("0.");
-        } else if ((operatorPicked) && (secondNumber === null)) { // Correct display for pressing "." right after an operator.
+        } else if ((operatorPicked) && (secondNumber === null) && (!cleaned)) { // Correct display for pressing "." right after an operator.
             updateDisplay("0.");
             cleaned = true;
-        } else {
+        } else {    
             updateDisplay(display.textContent + ".");
         }
         afterPoint = true;
