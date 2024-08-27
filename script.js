@@ -142,9 +142,9 @@ function handleSeparatorClick() {
         }
         afterPoint = true;
         afterResult = false;
-    } else if ((display.textContent === "0") || (afterResult) || (operatorPicked)) { // Included for the case where the result already has a "."
-        updateDisplay("0.");                                                         // Also accounts for pressing "." after an operator when the first number has
-        afterPoint = true;                                                           // a decimal separator.
+    } else if ((display.textContent === "0") || (afterResult) || (operatorPicked && secondNumber === null)) {   // Included for the case where the result already has a "."
+        updateDisplay("0.");                                                                                    // Also accounts for pressing "." after an operator when the first number has
+        afterPoint = true;                                                                                      // a decimal separator.
         afterResult = false;
         cleaned = true;
     }
