@@ -1,6 +1,6 @@
 # Calculator
 
-:arrow_forward:  **[Live preview!](https://nekosoffy.github.io/od-calculator/)**
+:arrow_forward:  **[Live preview!](https://nekosoffy.github.io/calculator/)**
 
 This project is a basic calculator application implemented using HTML, CSS, and JavaScript. The calculator supports standard arithmetic operations including addition, subtraction, multiplication, and division.
 
